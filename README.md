@@ -19,8 +19,8 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 
 #### Database Fields
 1. **Game Id** - Game Id as assigned by the league. The first 4 digits identify the season of the game (ie. 2012 for the 2012/2013 season). The next 2 digits give the type of game (01 = preseason, 02 = regular season, 03 = postseason, 04 = all-star). The last 4 digits identifies the specific game number. 
-2. **Season** - Season the game was played in in the format of \[%Y]\[%Y] (ex. 20122013)
-3. **Date** - Date the game was played in format \[%m%d$Y]
+2. **Season** - Season the game was played in in the format of `%Y%Y` (ex. 20122013)
+3. **Date** - Date the game was played in format `%m%d$Y`
 4. **Period** - Period the event occurred in
 5. **Event** - Event type (ie. SHOT, MISS, BLOCK)
 6. **Seconds_Elapsed** - Seconds elapsed since last event
