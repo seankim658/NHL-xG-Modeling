@@ -1,7 +1,23 @@
 # NHL xG Modeling 
 
+The goal of this project is to create an expected goal model using NHL shot event data from the NHL API. 
 
-### Database Fields
+## Data 
+
+Past season data collected from [Hockey-Statistics](https://hockey-statistics.com/shot-data/). Live data collected using [Hockey-Scraper](https://github.com/HarryShomer/Hockey-Scraper).
+
+## Installation and Setup
+
+### Docker Setup
+
+1. Install [Docker](https://docs.docker.com/get-docker/) on your machine. 
+2. Clone this repository to your machine. 
+3. Build the custom Docker image from the included Dockerfile. 
+4. TODO 
+
+### Database Setup
+
+#### Database Fields
 1. **Game Id** - Game Id as assigned by the league. The first 4 digits identify the season of the game (ie. 2012 for the 2012/2013 season). The next 2 digits give the type of game (01 = preseason, 02 = regular season, 03 = postseason, 04 = all-star). The last 4 digits identifies the specific game number. 
 2. **Season** - Season the game was played in in the format of \[%Y]\[%Y] (ex. 20122013)
 3. **Date** - Date the game was played in format \[%m%d$Y]
@@ -52,4 +68,8 @@
 48. **Goal** - Whether shot resulted in a goal 
 49. **Empty Net** - Whether the net was empty 
 
-Past season data collected from [Hockey-Statistics](https://hockey-statistics.com/shot-data/). Live data collected using [Hockey-Scraper](https://github.com/HarryShomer/Hockey-Scraper).
+## Authors and Acknowledgments 
+
+Author: Sean Kim 
+Acknowledgment: [Lars Skytte](https://twitter.com/HockeySkytte)
+Acknowledgment: [HarryShomer](https://github.com/HarryShomer)
