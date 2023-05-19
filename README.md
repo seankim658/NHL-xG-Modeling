@@ -70,6 +70,6 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 
 ## Authors and Acknowledgments 
 
-Author: Sean Kim 
-Acknowledgment: [Lars Skytte](https://twitter.com/HockeySkytte)
+Author: Sean Kim  
+Acknowledgment: [Lars Skytte](https://twitter.com/HockeySkytte)  
 Acknowledgment: [HarryShomer](https://github.com/HarryShomer)
