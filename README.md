@@ -14,8 +14,8 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 
 1. Install [Docker](https://docs.docker.com/get-docker/) on your machine. 
 2. Clone this repository to your machine. 
-3. Build the custom Docker image from the included Dockerfile. 
-4. TODO 
+3. Build the custom Docker image from the included Dockerfile. Fill in the `IMAGE NAME` and fill in `PATH/TO/DOCKERFILE` with the proper path to the Dockerfile. 
+```docker image build -t <IMAGE NAME> <PATH/TO/DOCKERFILE>```
 
 ### Conda Setup
 
@@ -27,7 +27,7 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 
 Run the Docker image that was created. Give a name to the container using `<CONTANINER NAME>`, and specify which port you want to use when accessing the database.  
 
-`docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>`  
+```docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>```  
 
 The Dockerfile specifies the following defaults:
 * Database: `shot_db` 
