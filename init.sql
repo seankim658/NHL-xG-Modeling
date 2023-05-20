@@ -47,5 +47,6 @@ CREATE TABLE IF NOT EXISTS shot_data_table (
     fenwick SMALLINT,
     shot SMALLINT,
     goal SMALLINT,
+    empty_net SMALLINT,
     xG FLOAT
 );
