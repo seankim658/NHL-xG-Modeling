@@ -1,5 +1,7 @@
 # NHL xG Modeling 
 
+**Work in progress.**
+
 The goal of this project is to create an expected goal model using NHL shot event data from the NHL API. 
 
 ## Data 
