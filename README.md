@@ -29,7 +29,9 @@ docker image build -t <IMAGE NAME> <PATH/TO/DOCKERFILE>
 
 Run the Docker image that was created. Give a name to the container using `<CONTANINER NAME>`, and specify which port you want to use when accessing the database.  
 
-```docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>```  
+```bash
+docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>
+```  
 
 The Dockerfile specifies the following defaults:
 * Database: `shot_db` 
@@ -38,7 +40,7 @@ The Dockerfile specifies the following defaults:
 
 Once you have the Docker image and created the container, you can freely start and stop the container without having to recreate the container again using the following commands: 
 
-```
+```bash
 docker start <CONTAINER NAME>
 docker stop <CONTAINER NAME>
 ```
