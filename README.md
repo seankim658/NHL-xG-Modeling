@@ -17,7 +17,29 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 3. Build the custom Docker image from the included Dockerfile. 
 4. TODO 
 
-### Database Setup
+### Conda Setup
+
+1. TODO
+
+### Database Usage 
+
+#### Running the PostgreSQL Database 
+
+Run the Docker image that was created. Give a name to the container using `<CONTANINER NAME>`, and specify which port you want to use when accessing the database.  
+
+`docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>`  
+
+The Dockerfile specifies the following defaults:
+* Database: `shot_db` 
+* Username: `db_user`
+* Password: `LetMeIn`  
+
+Once you have the Docker image and created the container, you can freely start and stop the container without having to recreate the container again using the following commands: 
+
+```
+docker start <CONTAINER NAME>
+docker stop <CONTAINER NAME>
+```
 
 #### Database Fields
 1. **Game Id** - Game Id as assigned by the league. The first 4 digits identify the season of the game (ie. 2012 for the 2012/2013 season). The next 2 digits give the type of game (01 = preseason, 02 = regular season, 03 = postseason, 04 = all-star). The last 4 digits identifies the specific game number. 
