@@ -101,7 +101,7 @@ docker stop <CONTAINER NAME>
 48. `shot` - Shot on goal 
 49. `goal` - Whether shot resulted in a goal 
 50. `empty_net` - Whether either of the nets was empty (not necessarily the net facing the shot)
-51. `xG` - Hockey-Statistics computer xG value 
+51. `xG` - Hockey-Statistics computed xG value 
 
 ## Authors and Acknowledgments 
 
