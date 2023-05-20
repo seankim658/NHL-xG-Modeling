@@ -21,7 +21,12 @@ docker image build -t <IMAGE NAME> <PATH/TO/DOCKERFILE>
 
 ### Conda Setup
 
-1. TODO
+Create a `conda` environment using the `conda_environment.yml` file and activate the environment. 
+
+'''bash
+conda env create -f <PATH/TO/conda_environment.yml>
+conda activate XG_ENV
+'''
 
 ### Database Usage 
 
