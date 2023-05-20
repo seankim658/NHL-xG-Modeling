@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS shot_data_table (
+    id SERIAL PRIMARY KEY,
     game_id INT,
     season INT, 
     game_date DATE,
