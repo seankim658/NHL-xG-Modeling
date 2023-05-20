@@ -14,8 +14,10 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 
 1. Install [Docker](https://docs.docker.com/get-docker/) on your machine. 
 2. Clone this repository to your machine. 
-3. Build the custom Docker image from the included Dockerfile. Fill in the `IMAGE NAME` and fill in `PATH/TO/DOCKERFILE` with the proper path to the Dockerfile. 
-```docker image build -t <IMAGE NAME> <PATH/TO/DOCKERFILE>```
+3. Build the custom Docker image from the included Dockerfile. Fill in the `IMAGE NAME` and fill in `PATH/TO/DOCKERFILE` with the proper path to the Dockerfile.   
+```bash
+docker image build -t <IMAGE NAME> <PATH/TO/DOCKERFILE>
+```
 
 ### Conda Setup
 
