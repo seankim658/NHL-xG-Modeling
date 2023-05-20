@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS shot_data_table (
-    game_id INT PRIMARY KEY,
+    game_id INT,
     season INT, 
     game_date DATE,
     game_period SMALLINT,
