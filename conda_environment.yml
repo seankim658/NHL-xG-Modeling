@@ -6,6 +6,7 @@ dependencies:
   - pandas 
   - python=3.10
   - cudatoolkit=11.2
+  - cudnn=8.1
   - tensorflow=2.10
   - scipy
   - scikit-learn
