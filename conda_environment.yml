@@ -7,7 +7,9 @@ dependencies:
   - python=3.10
   - cudatoolkit=11.2
   - cudnn=8.1
-  - tensorflow=2.10
+  - pip
+  - pip:
+    - tensorflow==2.10
   - scipy
   - scikit-learn
   - numpy
@@ -17,3 +19,5 @@ dependencies:
   - xgboost
   - jupyter
   - nb_conda_kernels
+# variables:
+#   LD_LIBRARY_PATH: "'$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/'"
