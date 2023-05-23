@@ -16,6 +16,7 @@ dependencies:
   - matplotlib
   - seaborn
   - sqlalchemy
+  - psycopg2
   - xgboost
   - jupyter
   - nb_conda_kernels
