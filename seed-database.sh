@@ -1,17 +1,21 @@
 #! /bin/bash 
+set -e 
+
+export PGPASSWORD=${POSTGRES_PASSWORD}
 
 # wait for PostgreSQL server to become available 
-until psql -h "localhost" -U "db_user" -c '\l'; do
-    >&2 echo "Waiting for Postgres - sleeping"
+until psql -h /var/run/postgresql/ -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" -c '\q'; do
+    echo >&2 "Postgres is unavailable - sleeping"
     sleep 1
-done 
+done
 
 >&2 echo "Postgres is up - executing..."  
 
-# loop through all csv data files in /docker-entrypoint-initdb.d/data and import each into PostgreSQL
-for filename in /docker-entrypoint-initdb.d/data/*.csv; do 
-    psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c \
-        "\COPY shot_data_table(
+# loop through all csv data files and import each into PostgreSQL
+for filename in /data/*.csv; do 
+    tablename=$(basename "${filename}" .csv)
+    psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} -c \
+        "COPY shot_data_table(
             game_id,
             season,
             game_date,
@@ -62,8 +66,8 @@ for filename in /docker-entrypoint-initdb.d/data/*.csv; do
             goal,
             empty_net,
             xG
-        ) \ 
-        FROM '$filename' \ 
-        DELIMITER ',' \ 
-        CSV HEADER;"
+        ) FROM STDIN WITH CSV HEADER" < "${filename}" 
+    echo "Imported ${filename}"
 done 
+
+echo "ALL CSV FILES IMPORTED SUCCESSFULLY"
