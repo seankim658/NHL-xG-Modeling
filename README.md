@@ -32,7 +32,7 @@ conda activate XG_ENV
 
 #### Running the PostgreSQL Database 
 
-Run the Docker image that was created. Give a name to the container using `<CONTANINER NAME>`, and specify which port you want to use when accessing the database.  
+Run the Docker image that was created. Give a name to the container using `<CONTANINER NAME>`, and specify which port (scripts assume port 5438 was used) you want to use when accessing the database.  
 
 ```bash
 docker run --name <CONTAINER NAME> -p <PORT>:5432 -d <IMAGE NAME>
