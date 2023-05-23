@@ -1,24 +1,19 @@
 import numpy as np 
 import pandas as pd 
 from sqlalchemy import create_engine
+from sqlalchemy import text 
 
 class DBConn: 
     ''' Class for the database connection. 
 
     Attributes
     ----------
-    host : str
-        Host for connection to the PostgreSQL database.
-    user : str 
-        User to connect to the database under. 
-    port : int 
-        Port to connect to the database through (set during the container setup command).
-    db : str 
-        Database to connect to. 
-    password : str 
-        Corresponding password to the user. 
+    _connection_string : str 
+        Connection string for sqlalchemy. 
+    engine : sqlalchemy.engine.Engine 
+        Provides the database connectivity. 
     table : str 
-        Table in the database to connect to. 
+        Table to query from. 
 
     Methods
     -------
@@ -45,9 +40,9 @@ class DBConn:
         table : str 
             Table in the database to connect to (default value 'shot_data_table').
         '''
-        self.host = host 
-        self.user = user 
-        self.port = port 
-        self.db = db 
-        self.password = password 
+    
+        self._connection_string = f'postgresql://{user}:{password}@{host}:{port}/{db}'
+        self.engine = create_engine(self._connection_string)
         self.table = table 
+
+    
