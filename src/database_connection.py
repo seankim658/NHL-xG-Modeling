@@ -64,7 +64,6 @@ class DBConn:
 
         with self.engine.connect() as connection:
             result = connection.execute(text(query_str))
-        # TODO
         df = pd.DataFrame(result.fetchall())
 
         return df
@@ -79,7 +78,7 @@ class DBConn:
         Parameters
         ----------
         query_str : str
-            SQL query to execute
+            SQL query to execute. 
 
         Returns
         -------
@@ -88,7 +87,19 @@ class DBConn:
         '''
 
         # TODO 
-        pass 
-
+        try:
+            with tempfile.TemporaryFile() as tmp:
+                query_sql = f'COPY {query_str} TO STDOUT WITH CSV HEADER'
+                conn = self.engine.raw_connection() 
+                cursor = conn.cursor() 
+                cursor.copy_expert(query_sql, tmp)
+                tmp.seek(0)
+                df = pd.read_csv(tmp)
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close()
+            conn.close() 
+            return df 
 
     
