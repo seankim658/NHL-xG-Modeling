@@ -21,6 +21,9 @@ class DBConn:
     
     query(query_str)
         Query a table in the database. 
+
+    query_with_copy(query_str)
+        For large queries, avoids the overhead from pandas built-in 'read_sql' function.
     '''
 
     def __init__(self, host: str = 'localhost', user: str = 'db_user', port: int = 5438, db: str = 'shot_db', password: str = 'LetMeIn') -> None:
