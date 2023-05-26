@@ -105,7 +105,6 @@ docker stop <CONTAINER NAME>
 
 #### Additional Reference Information
 
-**Rink Dimensions With Coordinate Refernce Points:**  
 ![rink_dimenstions](imgs/NHL_rink.jpg)
 
 ## Authors and Acknowledgments 
