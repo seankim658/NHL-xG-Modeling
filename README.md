@@ -103,6 +103,11 @@ docker stop <CONTAINER NAME>
 50. `empty_net` - Whether either of the nets was empty (not necessarily the net facing the shot)
 51. `xG` - Hockey-Statistics computed xG value 
 
+#### Additional Reference Information
+
+**Rink Dimensions With Coordinate Refernce Points:**  
+![rink_dimenstions](imgs/NHL_rink.jpg)
+
 ## Authors and Acknowledgments 
 
 Author: Sean Kim  
