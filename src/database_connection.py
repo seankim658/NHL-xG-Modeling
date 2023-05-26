@@ -86,7 +86,6 @@ class DBConn:
             Result of the SQL query in the form of a pandas dataframe. 
         '''
 
-        # TODO 
         try:
             with tempfile.TemporaryFile() as tmp:
                 query_sql = f'COPY {query_str} TO STDOUT WITH CSV HEADER'
