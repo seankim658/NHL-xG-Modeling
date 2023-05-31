@@ -12,11 +12,11 @@ adjusted_x:
 adjusted_y: 
     Adjusts the shot y coordinate so the shot always appears as if it were at the right end of the rink. 
 
-shot_distance: 
+event_distance: 
     Distance from the net, at (89, 0), in feet. Calculated using euclidean distance. 
 
-shot_angle:
-    Angle of the shot in degrees relative to the net. Calculated using the arctangent based on the adjusted x, y coordinates.
+event_angle:
+    Angle of the event in degrees relative to the net. Calculated using the arctangent based on the adjusted x, y coordinates.
 '''
 
 TABLE = 'shot_data_table'
@@ -28,11 +28,19 @@ db = DBConn()
 shot_data = db.query(f'SELECT * FROM {TABLE} LIMIT 20')
 
 def calc_adjusted_coords(row): 
-    pass 
+    if row['X'] < 0.0:
+        row['adjusted_X'] = abs(row['X'])
+        row['adjusted_y'] = -row['y']
+    else:
+        row['adjusted_X'] = row['X']
+        row['adjusted_y'] = row['y']
+    return row 
 
 def calc_distance(row):
-    pass 
+    row['event_distance'] = math.sqrt((89 - row['adjusted_X'])**2 + row['adjusted_y']**2)
+    return row 
 
 def calc_angle(row):
-    initial_angle = math.atan(row['y'] / (89 - abs(row['X']))) * (180 / math.pi)
+    row['event_angle'] = math.atan(row['adjusted_y'] / (89 - abs(row['adjusted_X']))) * (180 / math.pi)
+    return row 
 
