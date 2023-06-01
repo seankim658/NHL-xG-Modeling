@@ -89,7 +89,7 @@ docker stop <CONTAINER NAME>
 36. `home_coach` - Home team head coach 
 37. `away_coach` - Away team head coach 
 38. `event_zone` - Zone the event was initiated in (Offensive zone = Off, Neutral zone = Neu, Defensive zone = Def)
-39. `X` - On-ice X coordinate that the event occured 
+39. `x` - On-ice X coordinate that the event occured (coordinates were preprocessed to appear as if they were taken towards the right end of the ice, meaning the x coordinate is usually positive except for some shots listed as taken explicitly from the defensive zone) 
 40. `y` - On-ice y coordinate that the event occurred
 41. `is_home` - Team that created the event (0 if away team, 1 if home team)
 42. `Goalie` - Defending goaltender (blank if net empty)
