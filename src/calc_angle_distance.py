@@ -4,19 +4,15 @@ import math
 from database_connection import DBConn
 
 '''
-This script calculates a few supplementary data features: 
-
-adjusted_x: 
-    Adjusts the shot x coordinate so the shot always appears as if it were at the right end of the rink. 
-
-adjusted_y: 
-    Adjusts the shot y coordinate so the shot always appears as if it were at the right end of the rink. 
+This script calculates a couple supplementary data features: 
 
 event_distance: 
     Distance from the net, at (89, 0), in feet. Calculated using euclidean distance. 
 
 event_angle:
     Angle of the event in degrees relative to the net. Calculated using the arctangent based on the adjusted x, y coordinates.
+
+Note: all shots coordinates in the data were already adjusted to appear they were taken towards the right side of the ice.    
 '''
 
 TABLE = 'shot_data_table'
@@ -25,22 +21,24 @@ TABLE = 'shot_data_table'
 db = DBConn()
 
 # get all the data from the shot table 
-shot_data = db.query(f'SELECT * FROM {TABLE} LIMIT 20')
+# testing
+# shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' AND x < 0 LIMIT 50")
+shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' LIMIT 500")
 
-def calc_adjusted_coords(row): 
-    if row['X'] < 0.0:
-        row['adjusted_X'] = abs(row['X'])
-        row['adjusted_y'] = -row['y']
-    else:
-        row['adjusted_X'] = row['X']
-        row['adjusted_y'] = row['y']
-    return row 
+def calc_supp_stats(row): 
 
-def calc_distance(row):
-    row['event_distance'] = math.sqrt((89 - row['adjusted_X'])**2 + row['adjusted_y']**2)
-    return row 
+    def calc_distance(row):
+        row['event_distance'] = math.sqrt((89 - row['x'])**2 + row['y']**2)
+        return row 
 
-def calc_angle(row):
-    row['event_angle'] = math.atan(row['adjusted_y'] / (89 - abs(row['adjusted_X']))) * (180 / math.pi)
-    return row 
+    def calc_angle(row):
+        row['event_angle'] = math.atan(row['y'] / (89 - abs(row['x']))) * (180 / math.pi)
+        return row 
 
+    row = calc_distance(row)
+    row = calc_angle(row)
+
+    return row
+
+shot_data = shot_data.apply(calc_supp_stats, axis = 1)
+shot_data.to_csv('test.csv')
