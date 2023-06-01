@@ -51,6 +51,7 @@ docker stop <CONTAINER NAME>
 ```
 
 #### Database Fields
+
 1. `id` - Unique row identifier (primary key for `shot_data_table`)
 2. `game_id` - Game Id as assigned by the league. The first 4 digits identify the season of the game (ie. 2012 for the 2012/2013 season). The next 2 digits give the type of game (01 = preseason, 02 = regular season, 03 = postseason, 04 = all-star). The last 4 digits identifies the specific game number. 
 3. `season` - Season the game was played in in the format of `%Y%Y` (ex. 20122013)
@@ -102,6 +103,11 @@ docker stop <CONTAINER NAME>
 49. `goal` - Whether shot resulted in a goal 
 50. `empty_net` - Whether either of the nets was empty (not necessarily the net facing the shot)
 51. `xG` - Hockey-Statistics computed xG value 
+
+#### Calculated Database Fields
+
+52. `event_distance` - Distance in feet from the net that the event occurred 
+53. `event_angle` - Angle in relation to the net that the event occurred 
 
 #### Additional Reference Information
 
