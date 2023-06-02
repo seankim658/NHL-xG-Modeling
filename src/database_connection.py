@@ -127,30 +127,20 @@ class DBConn:
         if 'id' not in df:
             raise Exception("Data to be inserted must include 'id' (primary key) column.")
 
+        # check the dictionary input isn't empty 
+        if not cols:
+            return 'No new columns provided'
+
         # write new dataframe to a temp table 
         df.to_sql('temp_table', self.engine, if_exists = 'replace', index = False, method = 'multi')
 
         # SQL commands
-        column_commands = [] 
-        for key in cols:
-            command = f'''
-                ALTER TABLE shot_data_table ADD COLUMN {key} {cols[key].upper()}'''
-            column_commands.append(command) 
+        column_commands = [f'ALTER TABLE shot_data_table ADD COLUMN {key} {val.upper()}' for key, val in cols.items()] 
 
-        update_sql = f'''
-            UPDATE shot_data_table
-            SET '''
-        for key in cols:
-            update_sql += f'''{key} = temp_table.{key}, '''
-        # get rid of extra comma
-        update_sql = update_sql[:-2]
-        # add in space
-        update_sql += ' '
-        # add in rest of the command 
-        update_sql += f'''FROM temp_table WHERE shot_data_table.id = temp_table.id''' 
+        update_cols = [f'{key} = temp_table.{key}' for key in cols.keys()]
+        update_sql = f"UPDATE shot_data_table SET {', '.join(update_cols)} FROM temp_table WHERE shot_data_table.id = temp_table.id"
         
-        drop_sql = f'''
-            DROP TABLE temp_table'''
+        drop_sql = 'DROP TABLE temp_table'
 
         # execute commands 
         try:
@@ -161,8 +151,8 @@ class DBConn:
                 connection.execute(text(drop_sql))
                 connection.commit()
         except SQLAlchemyError as e: 
-            return e
+            raise
         except Exception as ex:
-            return ex 
+            raise
         
-        return 'didn\'t error'
+        return 'Successful update'
