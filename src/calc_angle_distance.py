@@ -25,7 +25,7 @@ shot_data = db.query_with_copy(f'SELECT * FROM {TABLE}')
 
 # testing
 # shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' AND x < 0 LIMIT 50")
-# shot_data = db.query(f"SELECT * FROM {TABLE}  ORDER BY id ASC LIMIT 500")
+# shot_data = db.query(f"SELECT * FROM {TABLE}  ORDER BY id ASC LIMIT 20")
 
 def calc_supp_stats(row): 
 
@@ -52,4 +52,4 @@ shot_data = shot_data.apply(calc_supp_stats, axis = 1)
 
 supp_df = shot_data[['id', 'event_distance', 'event_angle']]
 
-DBConn.insert(supp_df)
+db.insert(supp_df)
