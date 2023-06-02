@@ -1,4 +1,3 @@
-import numpy as np 
 import pandas as pd 
 from sqlalchemy import create_engine
 from sqlalchemy import text 
@@ -24,6 +23,9 @@ class DBConn:
 
     query_with_copy(query_str)
         For large queries, avoids the overhead from pandas built-in 'read_sql' function.
+
+    insert(df)
+        Inserts columns into the database table. 
     '''
 
     def __init__(self, host: str = 'localhost', user: str = 'db_user', port: int = 5438, db: str = 'shot_db', password: str = 'LetMeIn') -> None:
@@ -88,7 +90,7 @@ class DBConn:
 
         try:
             with tempfile.TemporaryFile() as tmp:
-                query_sql = f'COPY {query_str} TO STDOUT WITH CSV HEADER'
+                query_sql = f'COPY ({query_str}) TO STDOUT WITH CSV HEADER'
                 conn = self.engine.raw_connection() 
                 cursor = conn.cursor() 
                 cursor.copy_expert(query_sql, tmp)
@@ -99,6 +101,41 @@ class DBConn:
         finally:
             cursor.close()
             conn.close() 
-            return df 
+        return df 
 
-    
+    def insert(self, df):
+        ''' For inserting new data columns into the database table. There is no 
+        built in way to insert new columns into an existing table. This methods 
+        incorporates a work around where we create a temp table with the new columns
+        and primary key and then merge it back into our shot_data_table.  
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The data to be inserted into the table. MUST include id primary key column.
+        '''
+
+        # raise an error if the primary key is not included         
+        if 'id' not in df:
+            raise Exception("Data to be inserted must include 'id' (primary key) column.")
+
+        # write new dataframe to a temp table 
+        df.to_sql('temp_table', self.engine, if_exists = 'replace', index = False)
+
+        # SQL command 
+        sql_com = f'''
+            ALTER TABLE shot_data_table ADD COLUMN event_distance FLOAT;
+            ALTER TABLE shot_data_table ADD COLUMN event_angle FLOAT;
+
+            UPDATE shot_data_table
+            SET event_distance = temp_table.event_distance,
+                event_angle = temp_table.event_angle
+            FROM temp_table
+            WHERE shot_data_table.id = temp_table.id;
+
+            DROP TABLE temp_table;
+        '''
+
+        # execute commands 
+        with self.engine.connect() as connection: 
+            connection.execute(text(sql_com))
