@@ -4,7 +4,9 @@ import math
 from database_connection import DBConn
 
 '''
-This script calculates a couple supplementary data features and one-hot encodes some categorical features.  
+This script calculates a couple supplementary data features and one-hot encodes some categorical features. 
+Script only needs to be run once after initial setup. After calculating the new data columns, it adds the 
+features to the PostgreSQL table.  
 
 Supplementary features (used in all models): 
 
@@ -104,3 +106,4 @@ print('Insert distance and angle columns: ')
 print(db.insert(supp_df, {'event_distance': 'float', 'event_angle': 'float'}))
 
 ### converting categorical features
+
