@@ -1,6 +1,6 @@
 import pandas as pd 
-from sqlalchemy import create_engine
-from sqlalchemy import text 
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
 import tempfile
 
 class DBConn: 
@@ -137,8 +137,16 @@ class DBConn:
             DROP TABLE temp_table'''
 
         # execute commands 
-        with self.engine.connect() as connection: 
-            connection.execute(text(sql_com1))
-            connection.execute(text(sql_com2))
-            connection.execute(text(sql_com3))
-            connection.execute(text(sql_com4))
+        try:
+            with self.engine.connect() as connection: 
+                connection.execute(text(sql_com1))
+                connection.execute(text(sql_com2))
+                connection.execute(text(sql_com3))
+                connection.execute(text(sql_com4))
+                connection.commit()
+        except SQLAlchemyError as e: 
+            return e
+        except Exception as ex:
+            return ex 
+        
+        return 'didn\'t error'
