@@ -21,9 +21,11 @@ TABLE = 'shot_data_table'
 db = DBConn()
 
 # get all the data from the shot table 
+shot_data = db.query_with_copy(f'SELECT * FROM {TABLE}')
+
 # testing
 # shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' AND x < 0 LIMIT 50")
-shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' LIMIT 500")
+# shot_data = db.query(f"SELECT * FROM {TABLE}  ORDER BY id ASC LIMIT 500")
 
 def calc_supp_stats(row): 
 
@@ -32,7 +34,13 @@ def calc_supp_stats(row):
         return row 
 
     def calc_angle(row):
-        row['event_angle'] = math.atan(row['y'] / (89 - abs(row['x']))) * (180 / math.pi)
+        try:
+            row['event_angle'] = math.atan(row['y'] / (89 - abs(row['x']))) * (180 / math.pi)
+        except ZeroDivisionError as e: 
+            row['event_angle'] = 0.0
+        except Exception as ex:
+            print(f'Error: {ex}')
+            print(row)
         return row 
 
     row = calc_distance(row)
@@ -41,4 +49,7 @@ def calc_supp_stats(row):
     return row
 
 shot_data = shot_data.apply(calc_supp_stats, axis = 1)
-shot_data.to_csv('test.csv')
+
+supp_df = shot_data[['id', 'event_distance', 'event_angle']]
+
+DBConn.insert(supp_df)
