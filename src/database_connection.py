@@ -103,7 +103,7 @@ class DBConn:
             conn.close() 
         return df 
 
-    def insert(self, df):
+    def insert(self, df: pd.DataFrame):
         ''' For inserting new data columns into the database table. There is no 
         built in way to insert new columns into an existing table. This methods 
         incorporates a work around where we create a temp table with the new columns
@@ -120,22 +120,25 @@ class DBConn:
             raise Exception("Data to be inserted must include 'id' (primary key) column.")
 
         # write new dataframe to a temp table 
-        df.to_sql('temp_table', self.engine, if_exists = 'replace', index = False)
+        df.to_sql('temp_table', self.engine, if_exists = 'replace', index = False, method = 'multi')
 
-        # SQL command 
-        sql_com = f'''
-            ALTER TABLE shot_data_table ADD COLUMN event_distance FLOAT;
-            ALTER TABLE shot_data_table ADD COLUMN event_angle FLOAT;
-
+        # SQL commands 
+        sql_com1 = f'''
+            ALTER TABLE shot_data_table ADD COLUMN event_distance FLOAT'''
+        sql_com2 = f'''
+            ALTER TABLE shot_data_table ADD COLUMN event_angle FLOAT'''
+        sql_com3 = f'''
             UPDATE shot_data_table
             SET event_distance = temp_table.event_distance,
                 event_angle = temp_table.event_angle
             FROM temp_table
-            WHERE shot_data_table.id = temp_table.id;
-
-            DROP TABLE temp_table;
-        '''
+            WHERE shot_data_table.id = temp_table.id'''
+        sql_com4 = f'''
+            DROP TABLE temp_table'''
 
         # execute commands 
         with self.engine.connect() as connection: 
-            connection.execute(text(sql_com))
+            connection.execute(text(sql_com1))
+            connection.execute(text(sql_com2))
+            connection.execute(text(sql_com3))
+            connection.execute(text(sql_com4))
