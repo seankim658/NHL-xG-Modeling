@@ -52,4 +52,4 @@ shot_data = shot_data.apply(calc_supp_stats, axis = 1)
 
 supp_df = shot_data[['id', 'event_distance', 'event_angle']]
 
-print(db.insert(supp_df))
+print(db.insert(supp_df, {'event_distance': 'float', 'event_angle': 'float'}))

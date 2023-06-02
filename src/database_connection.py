@@ -103,7 +103,7 @@ class DBConn:
             conn.close() 
         return df 
 
-    def insert(self, df: pd.DataFrame):
+    def insert(self, df: pd.DataFrame, cols: dict) -> str:
         ''' For inserting new data columns into the database table. There is no 
         built in way to insert new columns into an existing table. This methods 
         incorporates a work around where we create a temp table with the new columns
@@ -113,6 +113,14 @@ class DBConn:
         ----------
         df : pd.DataFrame
             The data to be inserted into the table. MUST include id primary key column.
+        
+        cols : dict
+            The columns to be added to the table. Formatted {column name: column type}
+        
+        Returns
+        -------
+        str
+            Execution status. 
         '''
 
         # raise an error if the primary key is not included         
@@ -122,27 +130,35 @@ class DBConn:
         # write new dataframe to a temp table 
         df.to_sql('temp_table', self.engine, if_exists = 'replace', index = False, method = 'multi')
 
-        # SQL commands 
-        sql_com1 = f'''
-            ALTER TABLE shot_data_table ADD COLUMN event_distance FLOAT'''
-        sql_com2 = f'''
-            ALTER TABLE shot_data_table ADD COLUMN event_angle FLOAT'''
-        sql_com3 = f'''
+        # SQL commands
+        column_commands = [] 
+        for key in cols:
+            command = f'''
+                ALTER TABLE shot_data_table ADD COLUMN {key} {cols[key].upper()}'''
+            column_commands.append(command) 
+
+        update_sql = f'''
             UPDATE shot_data_table
-            SET event_distance = temp_table.event_distance,
-                event_angle = temp_table.event_angle
-            FROM temp_table
-            WHERE shot_data_table.id = temp_table.id'''
-        sql_com4 = f'''
+            SET '''
+        for key in cols:
+            update_sql += f'''{key} = temp_table.{key}, '''
+        # get rid of extra comma
+        update_sql = update_sql[:-2]
+        # add in space
+        update_sql += ' '
+        # add in rest of the command 
+        update_sql += f'''FROM temp_table WHERE shot_data_table.id = temp_table.id''' 
+        
+        drop_sql = f'''
             DROP TABLE temp_table'''
 
         # execute commands 
         try:
             with self.engine.connect() as connection: 
-                connection.execute(text(sql_com1))
-                connection.execute(text(sql_com2))
-                connection.execute(text(sql_com3))
-                connection.execute(text(sql_com4))
+                for com in column_commands:
+                    connection.execute(text(com))
+                connection.execute(text(update_sql))
+                connection.execute(text(drop_sql))
                 connection.commit()
         except SQLAlchemyError as e: 
             return e
