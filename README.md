@@ -126,11 +126,11 @@ docker stop <CONTAINER NAME>
 
 52. `event_distance` - Distance in feet from the net that the event occurred 
 53. `event_angle` - Angle in relation to the net that the event occurred
-54. `score_down_4` - Whether the team taking the shot was down 4 at the time 
+54. `score_down_4` - Whether the team taking the shot was down 4 or more at the time 
 55. `score_down_3` - Whether the team taking the shot was down 3 at the time 
 56. `score_down_2` - Whether the team taking the shot was down 2 at the time
 57. `score_down_1` - Whether the team taking the shot was down 1 at the time 
-58. `score_up_4` - Whether the team taking the shot was up 4 at the time 
+58. `score_up_4` - Whether the team taking the shot was up 4 or more at the time 
 59. `score_up_3` - Whether the team taking the shot was up 3 at the time
 60. `score_up_2` - Whether the team taking the shot was up 2 at the time 
 61. `score_up_1` - Whether the team taking the shot was up 1 at the time
