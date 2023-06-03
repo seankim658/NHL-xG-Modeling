@@ -13,6 +13,8 @@ The goal of this project is to create an expected goal model using NHL shot even
         - [Running the PostgreSQL Database](#running-the-postgresql-database)
         - [Database Fields](#database-fields)
         - [Calculated Database Fields](#calculated-database-fields)
+- [Modeling](#modeling)
+- [Future Work](#future-work)
 - [Authors and Acknowledgments](#authors-and-acknowledgments)
 
 ## Data 
@@ -153,6 +155,49 @@ docker stop <CONTAINER NAME>
 78. `state_4v5` - Whether the team taking the shot was playing 4 on 5 (used for the shorthanded model)
 79. `state_3v4` - Whether the team taking the shot was playing 3 on 4 (used for the shorthanded model)
 80. `state_3v5` - Whether the team taking the shot was playing 3 on 5 (used for the shorthanded model)
+
+## Modeling 
+
+Features used during modeling:  
+
+| Continuous Features | Discrete Features (Dummy Variables) |
+|---------------------|-------------------------------------|
+| event_distance      | is_home                             |
+| event_angle         | score_down_4                        |            
+| seconds_elapsed     | score_down_3                        | 
+| game_period         | score_down_2                        |
+| x                   | score_down_1                        |
+| y                   | score_up_4                          |
+|                     | score_up_3                          |
+|                     | score_up_2                          |
+|                     | score_up_1                          |
+|                     | score_even                          |
+|                     | wrist_shot                          |
+|                     | deflected_shot                      |
+|                     | tip_shot                            |
+|                     | slap_shot                           |
+|                     | backhand_shot                       |
+|                     | snap_shot                           |
+|                     | wrap_shot                           |
+|                     | state_5v5*                          |
+|                     | state_4v4*                          | 
+|                     | state_3v3*                          |
+|                     | state_5v4^                          |
+|                     | state_4v3^                          |
+|                     | state_5v3^                          | 
+|                     | state_6v5^                          |
+|                     | state_6v4^                          |
+|                     | state_4v5+                          |
+|                     | state_3v4+                          | 
+|                     | state_3v5+                          |
+
+/* only used in even strength model
+^ only used in man advantage model 
+\+ only used in shorthanded model  
+
+## Future Work 
+
+Section in progress.
 
 ## Authors and Acknowledgments 
 
