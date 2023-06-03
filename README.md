@@ -191,7 +191,7 @@ Features used during modeling:
 |                     | state_3v4+                          | 
 |                     | state_3v5+                          |
 
-/* only used in even strength model  
+\* only used in even strength model  
 ^ only used in man advantage model   
 \+ only used in shorthanded model  
 
