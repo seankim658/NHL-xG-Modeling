@@ -6,8 +6,17 @@ from database_connection import DBConn
 '''
 This script calculates a couple supplementary data features and one-hot encodes some categorical features. 
 Script only needs to be run once after initial setup. After calculating the new data columns, it adds the 
-features to the PostgreSQL table. Note it could take close to 30 minutes to run this script depending on 
-your hardware specs. 
+features to the PostgreSQL table. 
+
+**NOTE**
+Generally speaking, this script is very inneficient, especially the calc_other_stats method. Calculating the 
+event angle and event distance isn't too bad because essentially two calculations are being performed for each 
+row. The calc_other_stats method, on the other hand, performs significantly more operations, specifically string
+operations, which are relatively expensive in terms of computational resources. Since this script is only run once,
+I just accepted the lazy (but slow) method here (aka I let it run for awhile and did some errands), however, I have 
+also included an SQL file (that I wrote after) to calculate these same data features. Calculating directly in SQL 
+is much faster due to the elimination of large data transferring to the server, much better memory management, and 
+more advanced query optimizations. 
 
 Supplementary features (used in all models): 
 
@@ -70,11 +79,11 @@ TABLE = 'shot_data_table'
 db = DBConn()
 
 # get all the data from the shot table 
-# TODO shot_data = db.query_with_copy(f'SELECT * FROM {TABLE}')
+shot_data = db.query_with_copy(f'SELECT * FROM {TABLE}')
 
 # TESTING
 # shot_data = db.query(f"SELECT * FROM {TABLE} WHERE shot_event != 'BLOCK' AND x < 0 LIMIT 50")
-shot_data = db.query(f"SELECT * FROM {TABLE}  ORDER BY id ASC LIMIT 20")
+# shot_data = db.query(f"SELECT * FROM {TABLE}  ORDER BY id ASC LIMIT 20")
 
 ### Calculated statistics
 
@@ -99,12 +108,12 @@ def calc_supp_stats(row):
 
     return row
 
-# TODO shot_data = shot_data.apply(calc_supp_stats, axis = 1)
+shot_data = shot_data.apply(calc_supp_stats, axis = 1)
 
 supp_df = shot_data[['id', 'event_distance', 'event_angle']]
 
-# TODO print('Insert distance and angle columns: ')
-# TODO print(db.insert(supp_df, {'event_distance': 'float', 'event_angle': 'float'}))
+print('Insert distance and angle columns:')
+print(db.insert(supp_df, {'event_distance': 'float', 'event_angle': 'float'}))
 
 ### converting categorical features
 
@@ -176,7 +185,12 @@ def calc_other_stats(row):
         row['backhand_shot'] = 0
         row['snap_shot'] = 0
         row['wrap_shot'] = 0
+        row['null_shot'] = 0
 
+        if not isinstance(row['shot_type'], str):
+            row['null_shot'] = 1
+            return row 
+        
         shot = row['shot_type'].lower()
 
         if shot == 'wrist':
@@ -268,7 +282,7 @@ shot_data = shot_data.apply(calc_other_stats, axis = 1)
 
 cat_cols = ['id', 'score_down_4', 'score_down_3', 'score_down_2', 'score_down_1', 'score_up_4', 'score_up_3',
             'score_up_2', 'score_up_1', 'score_even', 'wrist_shot', 'deflected_shot', 'tip_shot', 'slap_shot',
-            'backhand_shot', 'snap_shot', 'wrap_shot', 'state_5v5', 'state_4v4', 'state_3v3', 'state_5v4',
+            'backhand_shot', 'snap_shot', 'wrap_shot', 'null_shot', 'state_5v5', 'state_4v4', 'state_3v3', 'state_5v4',
             'state_4v3', 'state_5v3', 'state_6v5', 'state_6v4', 'state_4v5', 'state_3v4', 'state_3v5']
 
 supp_df2 = shot_data[cat_cols]
@@ -278,5 +292,5 @@ for col in cat_cols:
     if col != 'id':
         cat_col_dict[col] = 'int'
 
-# TODO print('Insert converted categorical columns: ')
-# TODO print(db.insert(supp_df2, cat_col_dict))
+print('Insert converted categorical columns:')
+print(db.insert(supp_df2, cat_col_dict))

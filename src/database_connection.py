@@ -150,9 +150,11 @@ class DBConn:
                 connection.execute(text(update_sql))
                 connection.execute(text(drop_sql))
                 connection.commit()
-        except SQLAlchemyError as e: 
+        except SQLAlchemyError as e:
+            print(f'SQLAlchemyError: {e}') 
             raise
         except Exception as ex:
+            print(f'Error: {ex}')
             raise
         
         return 'Successful update'
