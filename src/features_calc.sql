@@ -35,7 +35,9 @@ add column state_6v5 int,
 add column state_6v4 int,
 add column state_4v5 int,
 add column state_3v4 int,
-add column state_3v5 int;
+add column state_3v5 int,
+add column is_forward int,
+add column off_wing int;
 
 -- update table by setting actual calculations
 update test_shot_data_table 
@@ -141,4 +143,11 @@ state_3v5 = case
 	when is_home = 1 and strength = '3x5' then 1 
 	when is_home = 0 and strength = '5x3' then 1
 	else 0
+end,
+is_forward = case when lower(position) = 'f'then 1 else 0,
+off_wing = case 
+	when y > 0 and lower(shoots) = 'r' then 1
+	when y < 0 and lower(shoots) = 'l' then 1
+	else 0
 end;
+
