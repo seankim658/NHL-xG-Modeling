@@ -157,6 +157,8 @@ docker stop <CONTAINER NAME>
 79. `state_4v5` - Whether the team taking the shot was playing 4 on 5 (used for the shorthanded model)
 80. `state_3v4` - Whether the team taking the shot was playing 3 on 4 (used for the shorthanded model)
 81. `state_3v5` - Whether the team taking the shot was playing 3 on 5 (used for the shorthanded model)
+82. `is_forward` - Whether the player taking the shot was a forward 
+83. `off_wing` - Whether the player taking the shot was on his off or strong side of the ice 
 
 ## Modeling 
 
@@ -180,7 +182,7 @@ Features used during modeling:
 |                     | slap_shot                           |
 |                     | backhand_shot                       |
 |                     | snap_shot                           |
-|                     | wrap_shot                           |
+|                     | wrap_shot                           |                        
 |                     | state_5v5*                          |
 |                     | state_4v4*                          | 
 |                     | state_3v3*                          |
@@ -192,6 +194,8 @@ Features used during modeling:
 |                     | state_4v5+                          |
 |                     | state_3v4+                          | 
 |                     | state_3v5+                          |
+|                     | is_forward                          |
+|                     | off_wing                            |
 
 \* only used in even strength model  
 ^ only used in man advantage model   
