@@ -8,14 +8,13 @@ This script calculates a couple supplementary data features and one-hot encodes 
 Script only needs to be run once after initial setup. After calculating the new data columns, it adds the 
 features to the PostgreSQL table. 
 
-**NOTE**
-Generally speaking, this script is very inneficient, especially the calc_other_stats method. Calculating the 
-event angle and event distance isn't too bad because essentially two calculations are being performed for each 
-row. The calc_other_stats method, on the other hand, performs significantly more operations, specifically string
-operations, which are relatively expensive in terms of computational resources. Since this script is only run once,
-I just accepted the lazy (but slow) method here (aka I let it run for awhile and did some errands), however, I have 
-also included an SQL file (that I wrote after) to calculate these same data features. Calculating directly in SQL 
-is much faster due to the elimination of large data transferring to the server, much better memory management, and 
+**NOTE (Don't use this script)**
+Generally speaking, this script is very inneficient, especially the calc_other_stats method. Calculating the event angle 
+and event distance isn't too bad because essentially two calculations are being performed for each row. The calc_other_stats 
+method, on the other hand, performs significantly more operations, specifically string operations, which are relatively 
+expensive in terms of computational resources. I have also included an SQL file (features_calc.sql) to calculate these same 
+data features. It is HIGHLY recommended to run the SQL statements directly instead of using this script. Calculating directly 
+in SQL is much faster due to the elimination of large dataset transferring to the server, much better memory management, and 
 more advanced query optimizations. 
 
 Supplementary features (used in all models): 
