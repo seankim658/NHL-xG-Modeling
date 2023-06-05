@@ -26,8 +26,9 @@ Past season data collected from [Hockey-Statistics](https://hockey-statistics.co
 There are a few differences in the initial data versus the raw data gathered from the NHL PBP API data:
 - For shot block events, the NHL PBP data has player1 as the blocker and player2 as the shooter. This has been switched around in the hockey-statistics data, player1 is the shooter and player2 is the blocker.  
 - For shot block events, the NHL PBP data has the event zone correspond to the defensive (blocking team). In the NHL data, the event_zone would be the defensive zone. Since player1 is the shooter in the hockey-statistics data, the event_zone is the offensive zone.  
-- In the hockey-statistics data, (x, y) coordinates are preprocessed to make it appear as if all shots were taken on the right side of the ice. This was done to standardize the data in order to calculate all events in relation to the net reference point, in this case (89, 0). The only coordinates that were not changed are those that are marked as occurring in the defensive zone.  
-- Especially in earlier season data, there are more goals and shots marked as being scored from the defensive zone, there are a couple potential reasons for this. Some are simply mistakes by NHL trackers and should have been marked as occurring in the offensive zone. Other times, incomplete passes or attempted ices that end up on net are counted as a shot on net, because it would have gone in if not for the "save". 
+- In the hockey-statistics data, (x, y) coordinates are preprocessed to make it appear as if all shots were taken on the right side of the ice. This was done to standardize the data in order to calculate all events in relation to the net reference point, in this case (89, 0). The only coordinates that were not changed are those that are marked as occurring in the defensive zone. 
+
+Another data piece to note is that especially in earlier season data, there are more goals and shots marked as being scored from the defensive zone, there are a couple potential reasons for this. Some are simply mistakes by NHL trackers and should have been marked as occurring in the offensive zone. Other times, incomplete passes or attempted ices that end up on net are counted as a shot on net, because it would have gone in if not for the "save". 
 
 ## Installation and Setup
 
