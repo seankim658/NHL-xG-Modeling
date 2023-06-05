@@ -143,18 +143,19 @@ docker stop <CONTAINER NAME>
 66. `slap_shot` - Whether the shot type was a slap shot
 67. `backhand_shot` - Whether the shot type was a backhand shot 
 68. `snap_shot` - Whether the shot type was a snap shot 
-69. `wrap_shot` - Whether the shot type was a wrap-around 
-70. `state_5v5` - Whether the teams were playing at 5 on 5 (used for the even strength model)
-71. `state_4v4` - Whether the teams were playing at 4 on 4 (used for the even strength model)
-72. `state_3v3` - Whether the teams were playing at 3 on 3 (used for the even strength model)
-73. `state_5v4` - Whether the team taking the shot was playing 5 on 4 (used for the man advantage model)
-74. `state_4v3` - Whether the team taking the shot was playing 4 on 3 (used for the man advantage model)
-75. `state_5v3` - Whether the team taking the shot was playing 5 on 3 (used for the man advantage model)
-76. `state_6v5` - Whether the team taking the shot was playing 6 on 5 (used for the man advantage model)
-77. `state_6v4` - Whether the team taking the shot was playing 6 on 4 (used for the man advantage model)
-78. `state_4v5` - Whether the team taking the shot was playing 4 on 5 (used for the shorthanded model)
-79. `state_3v4` - Whether the team taking the shot was playing 3 on 4 (used for the shorthanded model)
-80. `state_3v5` - Whether the team taking the shot was playing 3 on 5 (used for the shorthanded model)
+69. `wrap_shot` - Whether the shot type was a wrap-around
+70. `null_shot` - Whether the shot type was missing  
+71. `state_5v5` - Whether the teams were playing at 5 on 5 (used for the even strength model)
+72. `state_4v4` - Whether the teams were playing at 4 on 4 (used for the even strength model)
+73. `state_3v3` - Whether the teams were playing at 3 on 3 (used for the even strength model)
+74. `state_5v4` - Whether the team taking the shot was playing 5 on 4 (used for the man advantage model)
+75. `state_4v3` - Whether the team taking the shot was playing 4 on 3 (used for the man advantage model)
+76. `state_5v3` - Whether the team taking the shot was playing 5 on 3 (used for the man advantage model)
+77. `state_6v5` - Whether the team taking the shot was playing 6 on 5 (used for the man advantage model)
+78. `state_6v4` - Whether the team taking the shot was playing 6 on 4 (used for the man advantage model)
+79. `state_4v5` - Whether the team taking the shot was playing 4 on 5 (used for the shorthanded model)
+80. `state_3v4` - Whether the team taking the shot was playing 3 on 4 (used for the shorthanded model)
+81. `state_3v5` - Whether the team taking the shot was playing 3 on 5 (used for the shorthanded model)
 
 ## Modeling 
 
