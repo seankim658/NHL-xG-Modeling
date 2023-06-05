@@ -15,7 +15,7 @@ The goal of this project is to create an expected goal model using NHL shot even
         - [Calculated Database Fields](#calculated-database-fields)
 - [Modeling](#modeling)
 - [Future Work](#future-work)
-- 
+- [Reference Image](#reference-image)
 - [Authors and Acknowledgments](#authors-and-acknowledgments)
 
 ## Data 
@@ -203,7 +203,7 @@ Section in progress.
 
 ## Reference Image
 
-[rink](imgs/NHL_rink.jpg)
+![rink](imgs/NHL_rink.jpg)
 
 ## Authors and Acknowledgments 
 
