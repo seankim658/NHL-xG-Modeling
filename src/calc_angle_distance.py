@@ -47,6 +47,8 @@ Converted categorical features:
         backhand_shot
         snap_shot
         wrap_shot
+        is_forward
+        off_wing
     
     For even strength model: 
 
@@ -271,9 +273,25 @@ def calc_other_stats(row):
         
         return row 
 
+    def player_state(row):
+
+        row['is_forward'] = 0
+        row['off_wing'] = 0
+
+        if row['position'] == 'F':
+            row['is_forward'] = 1
+            
+        if row['y'] > 0:
+            if row['shoots'] == 'R':
+                row['off_wing'] = 1
+        elif row['y'] < 0:
+            if row['shoots'] == 'L':
+                row['off_wing'] = 1
+
     row = score_margins(row)
     row = shot_type(row)
     row = game_state(row)
+    row = player_state(row)
 
     return row 
 
@@ -282,7 +300,7 @@ shot_data = shot_data.apply(calc_other_stats, axis = 1)
 cat_cols = ['id', 'score_down_4', 'score_down_3', 'score_down_2', 'score_down_1', 'score_up_4', 'score_up_3',
             'score_up_2', 'score_up_1', 'score_even', 'wrist_shot', 'deflected_shot', 'tip_shot', 'slap_shot',
             'backhand_shot', 'snap_shot', 'wrap_shot', 'null_shot', 'state_5v5', 'state_4v4', 'state_3v3', 'state_5v4',
-            'state_4v3', 'state_5v3', 'state_6v5', 'state_6v4', 'state_4v5', 'state_3v4', 'state_3v5']
+            'state_4v3', 'state_5v3', 'state_6v5', 'state_6v4', 'state_4v5', 'state_3v4', 'state_3v5', 'is_forward', 'off_wing']
 
 supp_df2 = shot_data[cat_cols]
 
