@@ -127,6 +127,8 @@ docker stop <CONTAINER NAME>
 
 #### Calculated Database Fields
 
+These supplementary data fields can be calculated using the `features_calc.sql` file. 
+
 52. `event_distance` - Distance in feet from the net that the event occurred 
 53. `event_angle` - Angle in relation to the net that the event occurred
 54. `score_down_4` - Whether the team taking the shot was down 4 or more at the time 
