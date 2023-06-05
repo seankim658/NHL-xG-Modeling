@@ -4,7 +4,7 @@
 -- create table test_shot_data_table as select * from shot_data_table limit 1000000;
 
 -- alter table by adding columns  
-alter table test_shot_data_table 
+alter table shot_data_table 
 -- columns to add 
 add column event_distance float,
 add column event_angle float,
@@ -40,12 +40,12 @@ add column is_forward int,
 add column off_wing int;
 
 -- update table by setting actual calculations
-update test_shot_data_table 
+update shot_data_table 
 -- calculate the event_distance in relation to the right side net at point (89, 0)
 set event_distance = sqrt(power(89 - x, 2) + power(y, 2)),
 -- calculate the event_angle in relation to the right side net, the greatest function 
 -- is to avoid a potential divide by zero error 
-event_angle = degrees(atan(y / greatest(1e-10, 89 - abs(x)))),
+event_angle = abs(degrees(atan(y / greatest(1e-10, 89 - abs(x))))),
 -- calculate score state features
 score_down_4 = case 
 	when is_home = 1 and home_score - away_score <= -4 then 1
@@ -144,7 +144,7 @@ state_3v5 = case
 	when is_home = 0 and strength = '5x3' then 1
 	else 0
 end,
-is_forward = case when lower(position) = 'f'then 1 else 0,
+is_forward = case when lower(position) = 'f'then 1 else 0 end,
 off_wing = case 
 	when y > 0 and lower(shoots) = 'r' then 1
 	when y < 0 and lower(shoots) = 'l' then 1
