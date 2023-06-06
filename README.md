@@ -202,7 +202,7 @@ Features used during modeling:
 
 \* only used in even strength model  
 ^ only used in man advantage model   
-\+ only used in shorthanded model  
+\+ only used in short handed model  
 
 ## Future Work 
 
